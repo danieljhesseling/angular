@@ -35,3 +35,15 @@ class Coder {
 }
 
 const me = new Coder("Daniel", "Python", 1);
+
+class SCoder extends Coder {
+    constructor (
+        public company: string,
+    ) {
+        super("Daniel", "Python", 19)
+    }
+}
+
+const happy = new SCoder ("Lebara");
+
+console.log(happy);

@@ -1,0 +1,18 @@
+<h1> {{ heroeName }}</h1>
+
+<dl>
+    <td> Name: </td>
+    <dd> {{ heroeName }}</dd>
+
+    <td> Age: </td>
+    <dd> {{ heroeAge }}</dd>
+
+    <td> Function: </td>
+    <dd> {{ getName() }}</dd>
+
+    <td> Age: </td>
+    <dd> {{ heroeAge }}</dd>
+</dl>
+
+<button (click) = "changeName()"> Change Heroe name</button>
+<button (click) = "changeAge()"> Change Heroe age</button>

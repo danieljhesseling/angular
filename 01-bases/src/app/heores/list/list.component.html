@@ -1,3 +1,19 @@
+<button (click) = "deleteHeroe()">Delete heroe</button>
+
+<!-- In case deletedHeroe is different than nothing, don't show anything -->
+<div *ngIf="deletedHeroe !== ''; else notDeleted"> 
+    <h3>Deleted heroe: </h3>
+    <span> {{this.deletedHeroe}} </span>
+</div>
+
+<!-- In case there is nothing deleted: -->
+
+<ng-template #notDeleted>
+    <span>There is nothing deleted</span>
+</ng-template>
+
+
+
 <h1>List of heroes: </h1>
 
 <ul>
@@ -6,7 +22,3 @@
     </li>
 </ul>
 
-<button (click) = "deleteHeroe()">Delete heroe</button>
-
-<h3>Deleted heroe: </h3>
-<span> {{this.deletedHeroe}} </span>

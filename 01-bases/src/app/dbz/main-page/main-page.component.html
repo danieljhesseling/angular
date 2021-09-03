@@ -1,0 +1,15 @@
+<h1>DBZ</h1>
+<hr>
+
+<div class="row">
+    <div class="col">
+        <!-- @Input from dbzcharacters.component.ts -->
+        <app-dbzcharacters [dbzCharacters] = "dbzCharacters">
+        </app-dbzcharacters>
+    </div>
+
+    <div class="col">
+        <app-add [dbzCharacters] = "dbzCharacters"
+        [newCharacter] = "newCharacter"> </app-add>
+    </div>
+</div>

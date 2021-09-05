@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 import { DBZCharacter } from '../interfaces/dbz.interfaces';
+import { DbzService } from '../services/dbz.service';
 
 @Component({
   selector: 'app-main-page',
@@ -8,21 +9,22 @@ import { DBZCharacter } from '../interfaces/dbz.interfaces';
 })
 export class MainPageComponent {
 
-  //personajes
-  @Input() dbzCharacters: DBZCharacter[] = [
-    {
-      dbzName: 'Goku',
-      dbzPower: 14000
-    },
-    {
-      dbzName: 'Vegeta',
-      dbzPower: 10000
-    }
-  ];
-
   newCharacter: DBZCharacter = {
     dbzName: 'Master Mutenroshi',
     dbzPower: 9000
   }
+
+  //Getter from the service
+  get dbzCharacters(): DBZCharacter[] {
+    return this.dbzService.dbzCharacters;
+  }
+
+  addNewCharacter( argument: DBZCharacter) { 
+    //To initialite the debugger when it reachs that part of the code
+    this.dbzCharacters.push(argument);
+  }
+
+  //Constructor of the service -> Injection of dependencies
+  constructor( private dbzService: DbzService) {}
 
 }

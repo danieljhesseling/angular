@@ -26,8 +26,10 @@ export class AddComponent {
     //In main-pageHTML --> (onNewCharacter) = "addNewCharacter()" The function will be created in main-pageTS
     //this.onNewCharacter.emit(this.newCharacter);
 
+    //Function created in dbz.service.ts
     this.dbzService.addCharacter(this.newCharacter);
 
+    //Default character when one is uploaded
     this.newCharacter = {
       dbzName: '',
       dbzPower: 0

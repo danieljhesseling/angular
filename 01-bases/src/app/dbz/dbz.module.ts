@@ -23,6 +23,7 @@ import { DbzService } from './services/dbz.service';
     CommonModule,
     FormsModule
   ],
+  //Services to upload
   providers:[
     DbzService
   ]

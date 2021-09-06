@@ -9,11 +9,6 @@ import { DbzService } from '../services/dbz.service';
 })
 export class MainPageComponent {
 
-  newCharacter: DBZCharacter = {
-    dbzName: 'Master Mutenroshi',
-    dbzPower: 9000
-  }
-
   //Getter from the service
   get dbzCharacters(): DBZCharacter[] {
     return this.dbzService.dbzCharacters;

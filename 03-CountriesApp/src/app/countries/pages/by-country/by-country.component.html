@@ -1,0 +1,48 @@
+<h2> Search by country</h2>
+<hr>
+<div class="row">
+    <div class="col">
+        <form (ngSubmit)="search()" autocomplete="off">
+            <input 
+                type="text"
+                name="value"
+                class="form-control"
+                [(ngModel)] = "value"
+                placeholder="Insert country...">
+        </form>
+    </div>
+</div>
+
+<hr>
+
+<!-- In case the search doesn't exist -->
+<div class="alert alert-danger">
+    No coincidence
+</div>
+
+<!-- In case it does exist -->
+<div class="row">
+    <div class="col">
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th> Id </th>
+                    <th> Flag </th>
+                    <th> Name </th>
+                    <th> Poblation </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Flag</td>
+                    <td>Name</td>
+                    <td>210230</td>
+                    <td>ll</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,31 @@
+<div class="bg-dark border-right" id="sidebar">
+  <h2 class="text-light">Pokemon Angular</h2>
+  <hr>
+  <ul class="list-group">
+      <li
+        routerLink=""
+        routerLinkActive='active'
+        [routerLinkActiveOptions]="{exact:true}" 
+        class="list-group-item list-group-item-action list-group-item-dark">
+        By name
+      </li>
+      <li
+        routerLink="number"
+        routerLinkActive='active'
+        class="list-group-item list-group-item-action list-group-item-dark">
+        By number
+      </li>
+      <li
+        routerLink='region'
+        routerLinkActive='active'
+        class="list-group-item list-group-item-action list-group-item-dark">
+        By region
+      </li>
+      <li
+        routerLink='type'
+        routerLinkActive='active'
+        class="list-group-item list-group-item-action list-group-item-dark">
+        By type
+      </li>
+    </ul>
+</div>

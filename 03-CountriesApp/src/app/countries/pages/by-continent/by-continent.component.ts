@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { CountriesService } from '../../services/countries.service';
+import { Country } from '../../interfaces/countries.interfaces';
 
 @Component({
   selector: 'app-by-continent',
@@ -6,11 +8,36 @@ import { Component, OnInit } from '@angular/core';
   styles: [
   ]
 })
-export class ByContinentComponent implements OnInit {
+export class ByContinentComponent {
 
-  constructor() { }
+  value: string = "";
+  //To handle errors
+  isError: boolean = false;
 
-  ngOnInit(): void {
+  countries: Country[] = [];
+
+  constructor( private countriesService: CountriesService) { }
+
+  search( value:string ) {
+    this.isError = false;
+    this.value = value;
+
+    this.countriesService.searchContinent( this.value )
+      .subscribe( countries => {
+        console.log(countries);
+        this.countries = countries; 
+      }, (err) => {
+        this.isError = true;
+
+        //In case of error, countries will be an empty array
+        this.countries = [];
+      })
   }
+
+  sugerences (value:string ) {
+    this.isError = false;
+    console.log(value);
+  }
+
 
 }

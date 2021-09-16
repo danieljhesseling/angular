@@ -1,1 +1,28 @@
-<p>by-capital works!</p>
+<h2> Search by capital</h2>
+<hr>
+<div class="row">
+    <div class="col">
+       <app-country-input 
+            (onEnter) = "search( $event )"
+            placeholder = "Search capital...">
+        </app-country-input>
+    </div>
+</div>
+
+<hr>
+
+<!-- In case the search doesn't exist -->
+<div
+    *ngIf="isError"
+    class="alert alert-danger">
+    No coincidence with {{ value }}
+</div>
+
+<!-- In case it does exist -->
+<div
+    *ngIf = "countries.length >= 1"
+    class="row">
+    <div class="col">
+        <app-country-table [countries]="countries"></app-country-table>
+    </div>
+</div>

@@ -1,1 +1,48 @@
-<p>see-country works!</p>
+
+<div 
+    *ngIf="!country; else divCountry"
+    class="alert alert-info">
+    Wait please...
+</div>
+
+<ng-template #divCountry>
+    <div class="row" style="padding-left: 1rem;">
+        <div class="col-12">
+            <h1><small>{{ country.name }}</small></h1>
+            <hr>
+        </div>
+        
+        <div class="row">
+            <div class="col-4">
+                <h3>Flag:</h3>
+                <img [src]="country.flag" class="img-thumbnail"/>
+            </div>
+            <div class="col">
+                <h3>Information:</h3>
+                <ul class="list-group-item">
+                    <li class="list-group-item">
+                        <strong>Native name: </strong> {{ country.nativeName }}
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Poblation: </strong> {{ country.population | number}}
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Region: </strong> {{ country.region }}
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Subegion: </strong> {{ country.subregion }}
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Currencies: </strong> {{ country.currencies | json }}
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="row ml-2">
+            <h3>Currenies: </h3>
+            <ul class="list-group-item">
+                <li class="list-group-item">Name: {{country.currencies | json}}</li>
+            </ul>
+        </div>
+    </div>
+</ng-template>

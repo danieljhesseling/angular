@@ -5,7 +5,9 @@ import { ByCountryComponent } from './pages/by-country/by-country.component';
 import { ByContinentComponent } from './pages/by-continent/by-continent.component';
 import { SeeCountryComponent } from './pages/see-country/see-country.component';
 import { FormsModule } from '@angular/forms';
-
+import { RouterModule } from '@angular/router';
+import { CountryTableComponent } from './components/country-table/country-table.component';
+import { CountryInputComponent } from './components/country-input/country-input.component';
 
 
 @NgModule({
@@ -13,17 +15,21 @@ import { FormsModule } from '@angular/forms';
     ByCapitalComponent,
     ByCountryComponent,
     ByContinentComponent,
-    SeeCountryComponent
+    SeeCountryComponent,
+    CountryTableComponent,
+    CountryInputComponent
   ],
   exports: [
     ByCapitalComponent,
     ByCountryComponent,
     ByContinentComponent,
-    SeeCountryComponent
+    SeeCountryComponent,
+    CountryTableComponent
   ],
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    RouterModule
   ]
 })
 export class CountriesModule { }

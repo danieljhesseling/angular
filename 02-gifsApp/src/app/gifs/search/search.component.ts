@@ -31,8 +31,4 @@ export class SearchComponent {
     this.txtSearch.nativeElement.value = '';
   }
 
-  clear() {
-    localStorage.clear();
-  }
-
 }

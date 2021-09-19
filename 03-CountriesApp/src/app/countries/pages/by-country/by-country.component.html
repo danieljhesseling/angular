@@ -1,17 +1,27 @@
-<h2> Search by country</h2>
-<hr>
-<div class="row">
-    <div class="col">
-       <app-country-input 
-            (onEnter) = "search( $event )"
-            (onDebounce) = "sugerences( $event );"
-            placeholder = "Search country...">
-        </app-country-input>
+<div class="animate__animated animate__fadeIn">
+    <h2> Search by country</h2>
+    <hr>
+    <div class="row">
+        <div class="col">
+        <app-country-input 
+                (onEnter) = "search( $event )"
+                (onDebounce) = "sugerences( $event );"
+                placeholder = "Search country...">
+            </app-country-input>
+        </div>
     </div>
+
+    <ul class="list-group">
+        <li 
+            *ngFor = 'let country of countriesSuggested' 
+            class="list-group-item list-group-item-action"
+            (click) = "search( country.name )">
+            {{ country.name }}    
+        </li>
+    </ul>
+
+    <hr>
 </div>
-
-<hr>
-
 <!-- In case the search doesn't exist -->
 <div
     *ngIf="isError"

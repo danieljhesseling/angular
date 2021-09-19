@@ -5,7 +5,11 @@ import { Country } from '../../interfaces/countries.interfaces';
 @Component({
   selector: 'app-by-country',
   templateUrl: './by-country.component.html',
-  styles: [
+  styles: [`
+    li{
+      cursor: pointer;
+    }
+  `
   ]
 })
 export class ByCountryComponent {
@@ -15,6 +19,7 @@ export class ByCountryComponent {
   isError: boolean = false;
 
   countries: Country[] = [];
+  countriesSuggested: Country [] = [];
 
   constructor( private countriesService: CountriesService) { }
 
@@ -36,7 +41,10 @@ export class ByCountryComponent {
 
   sugerences (value:string ) {
     this.isError = false;
-    console.log(value);
+
+    this.countriesService.searchCountry( value )
+      .subscribe( countries => this.countriesSuggested = countries.splice(0,5),
+      (err) => this.countriesSuggested = []);
   }
 
 }

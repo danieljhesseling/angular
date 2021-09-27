@@ -21,14 +21,15 @@ export class CountryInputComponent implements OnInit{
 
   // This will create the action each time the component its created
   ngOnInit() {
-    this.debouncer
+    /*this.debouncer
     .pipe( 
       //How many ms do you want to wait util suscribe is used
       debounceTime(300)
     )
     .subscribe( value => {
-      this.onDebounce.emit(value);
-    });
+      //this.onDebounce.emit(value);
+      console.log(this.onDebounce.emit(value));
+    })*/
   }
 
   search() {

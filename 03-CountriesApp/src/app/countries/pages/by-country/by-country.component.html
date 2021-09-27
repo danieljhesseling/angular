@@ -15,7 +15,7 @@
         <li 
             *ngFor = 'let country of countriesSuggested' 
             class="list-group-item list-group-item-action"
-            (click) = "search( country.name )">
+            (click) = "search( country.name.common )">
             {{ country.name }}    
         </li>
     </ul>

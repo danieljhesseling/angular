@@ -1,0 +1,22 @@
+Bootstrap: https://getbootstrap.com/docs/4.0/getting-started/introduction/ 
+Quicktype: https://app.quicktype.io/ -> Para las interfaces
+Animate Style Css: https://animate.style/ -> Distintos estilos
+Netlify: https://app.netlify.com -> Subir Apps
+PrimeNg: 
+
+Pasos para empezar un proyecto con base de datos API
+
+- ng new pipesAngularApp
+
+CAMBIAR ESTILO: 
+
+- Dentro de la carpeta, instalamos primeNg y sus iconos: (en la terminal):
+C:\Users\dani_\Desktop\Angular\curso\04-pipesAngularApp>npm install primeng primeicons
+
+- Seleccionamos de primeNG el estilo de nuestro gusto y buscamos el styles:
+	node_modules/primeicons/primeicons.css
+	node_modules/primeng/resources/themes/saga-blue/theme.css
+	node_modules/primeng/resources/primeng.min.css
+
+- Lo pegamos en angular.json: style: []
+

@@ -1,0 +1,234 @@
+Bootstrap: https://getbootstrap.com/docs/4.0/getting-started/introduction/ 
+Quicktype: https://app.quicktype.io/ -> Para las interfaces
+Animate Style Css: https://animate.style/ -> Distintos estilos
+Netlify: https://app.netlify.com -> Subir Apps
+
+Pasos para empezar un proyecto con base de datos API
+
+14/09/2021 - 15/09/2021
+
+DESARROLLO DEL ESQUELETO DEL PROYECTO
+
+- Crear el proyecto con ng new NombreApp
+
+- Buscar el RestApi 
+
+- Tomamos el valor que queremos, ejemplo: " https://restcountries.eu/rest/v2/name/united " y lo ponemos en postman, en este caso es por nombre. Control - S para guardar
+
+- En caso de usar bootstrap -> CSS copiar y pegar en index.html <head> </head>
+
+- Creación de carpetas para los módulos: Crear una llamada shared para incluir todas aquellas carpetas que puedan ser reutilizable (Navbar, Sidebar, Footer, Menu...) 
+
+- Crear carpeta con el elemento principal de la App: pais // pokemon -> Y dentro los components, interfaces, services, pages 
+
+- Crear modulos dentro de las carpetas -> ng g m country // ng g m shared
+
+- Crear componentes dentro de las carpetas -> ng g c shared/sidebar --skip-tests -is  // ng g c countries/pages/by-capital --skip-tests -is (El resto de paginas + see)
+
+- Comprobar los modulos que serán usados en varias partes, en este caso el sidebar --> shared.module.ts --> escribir: 'exports:[SidebarComponent],'
+
+- Así como el sidebar, hacer con todos los componentes de countries en countries.module 
+
+- Importar ambos modulos en app.module.ts
+
+- Crear rutas para las subrutas -> Dentro de la carpeta principal: app-routing.module.ts e importarlo en app.module.ts ---> Las rutas se escriben como:
+<router-outlet> </router-outlet>
+
+- Donde es quiere mostrar la ruta: <p routerLink = 'path' routerLinkActive = 'active'> </p>
+Si una de las opciones siempre se mantengan activas, se evita con un: <p routerLink = 'path' routerLinkActive = 'active' [routerLinkActiveOptions]="{exact:true}"> </p>
+
+DESARROLLO DE PARTE GRÁFICA
+
+- Para hacer que los li del sidebar tengan el cursor con puntero: sidebar.component.ts -> @compontent -> styles[`li {cursor: pointer}`]
+
+- Si se mete un formulario, se debe importar en el module.ts (en este caso, countries.module.ts) y asi poder usar ngModel -> Dentro de input -> [(ngModel)] = "value"
+
+- Para que el formulario funcione al enviar la información desde el teclado: <form (ngSubmit) = "función()"> 
+
+- En su .component.ts se incluye el valor anteriormente comentado y su función: value y función()
+
+15/09/2021 - 16/09/2021
+
+DESARROLLO DE SERVICE 
+
+- ng g s countries/services/countries --skip-tests
+
+- En app.module.ts importar HttpClientModule de import { HttpClientModule } from '@angular/common/http';
+
+- Dentro de Service se crea el apiUrl con la raíz de la API: private apiUrl: string = 'https://restcountries.eu/rest/v2'
+
+- En Service en el constructor:  constructor( private http: HttpClient) { } 
+
+- Realizar las funciones como searchCountry() con tipado <any>... 
+
+- Inyectar el service allá donde se vaya a usar, por ejemplo en by-name --> contructor ( private countriesService: CountriesService )
+
+- Completar la función search donde esté inyectado
+
+MANEJAR ERRORES
+
+- Crear booleano tras el value para controlar errores: isError: boolean = false;
+
+- Después de la respuesta (promesa resp ) de suscribre ', (err) => {} 
+
+- ngIf='isError' para que aparezca aquel código que se busca que aparezca en caso de error.
+
+INTERFACES
+
+- Postman realizar get para copiar todos los valores y pegarlos en quicktype
+
+- Crear un countries.interfaces.ts y pegar el resultado
+
+- Cambiar tipado de searchCountry() y añadir el mismo tipado al return
+
+MOSTRAR PRESULTADOS
+
+- Crear en by-country un array vacío de objetos de la interfaz country para rellenarlo con search()
+
+- Añadir con un <tr *ngFor = "let country of countries">
+			<td> {{ country.indice }}...
+
+- Promesa resp cambiarla por countries para que sea más fácil de leer: 
+
+	this.countries = countries
+
+MODULAR TABLA E INPUT
+
+- Crear componente para tabla e input en components  ng g c nameComponent --skip-tests -is 
+
+	//Html
+- Pasar el html a table
+
+- <app-country-table [countries] = countries> en by-country 
+
+- @Input() countries: Country[] = [];
+
+- constructor ( private countriesService: CountriesService ) {} 
+
+	//Input
+- Pasar el html (form) a input.html
+
+- <app-country-input (onEnter) = "buscar()">
+
+- Corregir los dos errores en .ts (creando la variable value: string = ""; y la función search() {};
+
+- Se necesita enviar el buscar() de input.ts a by-name.ts para ello:
+	@Output() onEnter: EventEmitter<string> = new EventEmitter(); 
+
+- en search() { 
+	this.onEnter.emit( this.value );
+	}
+
+- by-country --> en search () --> search ( value:string ) {
+	
+	...
+	this.value = value; 
+	...
+
+	}
+
+ONDEBOUNCE 
+
+- Su utilidad es para enviar datos en caso de que el usuario deje de escribir y así ofrecerle recomendaciones
+
+- Debajo de @Output() onEnter: EventEmitter<string> = new EventEmitter();
+		@Output() onDebounce:  EventEmitter<string> = new EventEmitter();
+
+- Y se crea debajo un observable con debouncer: Subject<string>: new Subkect();
+
+- ngOnInit() {} Es un componente que se inicia nada más inicializar el componente
+	ngOnInit() {
+		this.debouncer
+			.pipe( debounceTime(300); )
+			.subscribe( value => {
+      				this.onDebounce.emit(value);
+    			});
+
+- En el country-input.html -> <input ... (input) = "pressedKey()"... 
+
+- En by-country.html <app-country-input> añadir tras (onEnter)... 
+	(onDebounce) = "sugerences( $event );"
+
+16/09/2021 - 
+
+- Cambios de la UI de la App 
+ 
+- Copiar html de by-country a by-capital y añadir placeholder debajo de (onEnter) 
+
+- Lo mismo con el ts de ambos, pero cambiando this.countriesService.searchCapital( this.value )
+
+- Crear en services searchCapital
+
+- Para enviar como un input el searchCapital al placeholder, para ello se crea una propiedad [placeholder] = placeholder, en Input @Input() placeholder: string = '';  
+	Y en el html placeholder = "Search by capital... " 
+
+SEE COUNTRY 
+
+- Dentro del ts -> constructor ( private activatedRoute: ActivatedRoute, private countryService: CountryService ) {} para suscribirnos a cualquier cambio de la URL 
+
+- Crear parametro country!: Country;
+
+- onInit() {
+	this.activatedRoute.params
+		.suscribe( params => {
+			this.countriesService.getCountryByCode( id )
+				.suscribe( country => {
+					this.country = country;
+				})
+			} )
+	} 
+
+- Crear función en service
+
+getCountryByCode ( id: string ): Observable<Country> {
+	const url = `{ this.apiUrl }/alpha/${ id }`;
+	return this.http.get<Country>(url);
+}
+
+CONTINENTES:
+
+- Crear en ts un array para los continentes
+
+- Para marcar cual será el continent activo, se crea un continentActive: string = ''; y un método:
+	activateContinent (continent: string) {
+		this.continentActive = continent;
+		}
+
+- Para cambiar las clases por una condición, en el html button: 
+	[class] = " (continent === continentActive) ? 'btn btn-dark' : 'btn btn-outline-dark'" 
+
+SUGERENCIAS:
+
+- En by-country.html escribir el html de cómo mostrar las sugerencias:
+	 <ul class="list-group">
+        <li 
+            *ngFor = 'let country of countriesSuggested' 
+            class="list-group-item list-group-item-action"
+            (click) = "search( country.name )">
+            {{ country.name }}    
+        </li>
+    </ul>
+
+- En by-country.ts escribir un array donde almacenar los paises sugeridos countriesSuggested: Country [] = [];
+
+- sugerences (value:string ) {
+    this.isError = false;
+
+    this.countriesService.searchCountry( value )
+      .subscribe( countries => this.countriesSuggested = countries.splice(0,5),
+      (err) => this.countriesSuggested = []);
+  }
+
+Realizar el build: 
+
+ng build 
+
+
+REALIZAR PUSH A GITHUB
+
+git init 
+git add .
+git commit -m "mensage"
+git push origin master 
+
+

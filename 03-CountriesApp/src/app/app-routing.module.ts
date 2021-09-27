@@ -23,7 +23,7 @@ const routes: Routes = [
   },
   // :id is to make it dinamic
   {
-    path: 'country/:id',
+    path: 'alpha/:id',
     component: SeeCountryComponent
   },
   // In case a route that doesn't exist is entered it will redirect to the principal:

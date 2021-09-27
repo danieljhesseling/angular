@@ -1,0 +1,55 @@
+<div class="text-layout">
+    <h1>Decimal Pipe</h1>
+    <p>This are the basics Pipes included in Common Module to use with numbers</p>
+</div>
+
+<div class="grid">
+    <div class="col col-md-5 col-sm-12">
+        <p-card header="Neto Sales"
+                subheader="Year 2021">
+            {{ netoSales | number: '1.2-2' }}
+            <i class="pi pi-euro"></i>
+        </p-card>
+    </div>
+
+    <div class="col col-md-5 col-sm-12">
+        <p-card header="Bruto Sales"
+                subheader="Year 2021">
+            {{ (netoSales + 2123000) | currency:'EUR':'symbol-narrow': '1.3-3' }}
+        </p-card>
+    </div>
+    
+    <div class="col col-md-6 col-sm-12">
+        <p-card header="Percentage gain"
+                subheader="Year 2021">
+            {{ porcentage | percent: '2.2-2' }}
+        </p-card>
+    </div>
+</div>
+<hr>
+<div class="text-layout">
+    <h2>Code written for each card:</h2>
+</div>
+
+<div class="grid">
+    <div class="col col-md-5 col-sm-12">
+        <p-card header="Neto Sales"
+                subheader="Year 2021">
+            <p>netoSales | number: '1.2-2'</p>
+        </p-card>
+    </div>
+
+    <div class="col col-md-5 col-sm-12">
+        <p-card header="Bruto Sales"
+                subheader="Year 2021">
+            <p>(netoSales + 2123000) | currency:'EUR':'symbol-narrow': '1.3-3'</p>
+        </p-card>
+    </div>
+    
+    <div class="col col-md-6 col-sm-12">
+        <p-card header="Percentage gain"
+                subheader="Year 2021">
+            <p>porcentage | percent: '2.2-2'</p>
+        </p-card>
+    </div>
+</div>

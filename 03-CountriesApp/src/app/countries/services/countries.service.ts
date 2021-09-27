@@ -9,7 +9,7 @@ import { Country } from '../interfaces/countries.interfaces';
 })
 export class CountriesService {
 
-  private apiUrl: string = 'https://restcountries.eu/rest/v2'
+  private apiUrl: string = 'https://restcountries.com/v3'
 
   constructor( private http: HttpClient) { }
 

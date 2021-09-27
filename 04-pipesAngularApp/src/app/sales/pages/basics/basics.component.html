@@ -1,0 +1,56 @@
+<div class="text-layout">
+    <h1>Basics Pipes</h1>
+    <p>This are the basics Pipes included in Common Module, each one uses a pipe to {{ nameLower }}, {{ nameUpper }} & {{ nameComplete  }} respectively</p>
+</div>
+
+<div class="grid">
+    <div class="col col-md-5 col-sm-12">
+        <p-card header="Uppercase"
+                [subheader]="nameLower | uppercase">
+                {{ nameLower | uppercase }}
+        </p-card>
+    </div>
+    <div class="col col-md-5 col-sm-12">
+        <p-card header="Lowercase"
+                [subheader]="nameUpper | lowercase">
+                {{ nameUpper | lowercase }}
+        </p-card>
+    </div>
+    <div class="col col-md-5 col-sm-12">
+        <p-card header="Titlecase"
+                [subheader]="nameComplete | titlecase">
+                {{ nameComplete | titlecase }}
+        </p-card>
+    </div>
+</div>
+
+<div class="text-layout">
+    <h1>Date | Fecha | Pipe</h1>
+    <p> As the first 3, this one is also included in the Commmon Module</p>
+</div>
+
+<div class="grid">
+    <div class="col col-md-12">
+        <p-card header="Format">
+            <ul>
+                <li>Just the variable</li>
+                <li>Pipe date</li>
+                <li>Pipe date: 'medium'</li>
+                <li>Pipe date: 'long'</li>
+                <li>Pide date: 'long':'':'de'</li>
+            </ul>
+        </p-card>
+    </div>
+    
+    <div class="col col-md-12">
+        <p-card header="Result">
+            <ul>
+                <li>{{ date }}</li>
+                <li>{{ date | date }}</li>
+                <li>{{ date | date: 'medium' }}</li>
+                <li>{{ date | date: 'long' }}</li>
+                <li>{{ date | date: 'long':'':'de' }}</li>
+            </ul>
+        </p-card>
+    </div>
+</div>

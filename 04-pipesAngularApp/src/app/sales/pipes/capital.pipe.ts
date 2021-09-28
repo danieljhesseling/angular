@@ -8,6 +8,5 @@ export class CapitalPipe implements PipeTransform {
         return ( isCapital ) 
             ? value.toUpperCase()
             : value.toLocaleLowerCase();
-        
     }
 }

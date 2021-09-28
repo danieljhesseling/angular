@@ -7,6 +7,9 @@ import { OrganizedComponent } from './pages/organized/organized.component';
 import { PrimeNgModule } from '../prime-ng/prime-ng.module';
 
 import { CapitalPipe } from './pipes/capital.pipe';
+import { FlyPipe } from './pipes/fly.pipe';
+import { OrganizePipe } from './pipes/organize.pipe';
+import { ColorPipePipe } from './pipes/color-pipe.pipe';
 
 
 
@@ -15,7 +18,11 @@ import { CapitalPipe } from './pipes/capital.pipe';
     NumbersComponent,
     BasicsComponent,
     OrganizedComponent,
-    CapitalPipe
+
+    CapitalPipe,
+    FlyPipe,
+    OrganizePipe,
+    ColorPipePipe
   ],
   exports: [
     NumbersComponent,

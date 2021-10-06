@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import {MenuItem} from 'primeng/api';
+import { MenuItem } from 'primeng/api';
 
 @Component({
   selector: 'app-menu',
@@ -50,6 +50,11 @@ export class MenuComponent implements OnInit {
             label: 'CountriesApp',
             icon: 'pi pi-globe',
             url: 'https://wonderful-goodall-388efa.netlify.app'
+          },
+          {
+            label: 'HeroesApp',
+            icon: 'pi pi-play',
+            url: 'https://loving-archimedes-9b0020.netlify.app'
           }
         ]
       },

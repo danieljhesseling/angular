@@ -1,0 +1,25 @@
+<h1>List of heroes</h1>
+
+<div>
+
+    <div    
+        fxLayout="row wrap"
+        fxLayoutAlign="center"
+        fxLayoutGap="1em">
+        <!-- row makes ti everything in a row, with wrap it will go to a new row when the row reaches 100% width -->
+        
+        <div 
+            fxFlex="30"
+            fxFlex.lg="20"
+            fxFlex.sm="40"
+            fxFlex.xs="80"
+            *ngFor="let heroe of heroes">
+            <!-- number to indicate the % the card will take of the row -->
+
+            <app-heroe-card [heroe] = heroe> </app-heroe-card>
+            
+        </div>
+
+    </div>
+    
+</div>

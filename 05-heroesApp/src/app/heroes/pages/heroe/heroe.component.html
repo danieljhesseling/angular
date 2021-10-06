@@ -1,0 +1,61 @@
+<mat-grid-list cols="1" *ngIf="!heroe; else divHeroe">
+    <mat-grid-tile>
+        <mat-spinner></mat-spinner>
+    </mat-grid-tile>
+
+</mat-grid-list>
+
+<ng-template #divHeroe>
+   
+    <div    
+        fxLayout="row wrap"
+        fxLayoutAlign="center"
+        fxLayoutGap="1em">
+        <!-- row makes ti everything in a row, with wrap it will go to a new row when the row reaches 100% width -->
+
+            <mat-card
+                fxFlex = "40"
+                fxFlex.md = "60"
+                fxFlex.sm = "70"
+                fxFlex.xs = "80">
+                <mat-card-title-group>
+                  <mat-card-title>{{heroe.superhero}}</mat-card-title>
+                  <mat-card-subtitle>Heroe Name</mat-card-subtitle>
+                  
+                  <mat-card-title>{{heroe.first_appearance}}</mat-card-title>
+                  <mat-card-subtitle>First appearance</mat-card-subtitle>
+
+                  <img 
+                    mat-card-image [src]="heroe | image"
+                    >
+                </mat-card-title-group>
+    
+              </mat-card>
+
+              <mat-card 
+                    fxFlex = "40"
+                    fxFlex.md = "60"
+                    fxFlex.sm = "70"
+                    fxFlex.xs = "80">
+                <mat-card-title-group>
+                  <mat-card-title>{{heroe.alter_ego}}</mat-card-title>
+                  <mat-card-subtitle>Alter Ego</mat-card-subtitle>
+
+                  <mat-card-title>{{heroe.publisher}}</mat-card-title>
+                  <mat-card-subtitle>Publisher</mat-card-subtitle>
+
+                  <mat-card-title>{{heroe.characters}}</mat-card-title>
+                  <mat-card-subtitle>Others Characters</mat-card-subtitle>
+
+                  <img 
+                    mat-card-image [src]="heroe | imageAlter">
+                </mat-card-title-group>
+            
+              </mat-card>
+            
+        </div>
+    
+    <ng-template #divMobil></ng-template>
+    
+    
+</ng-template>

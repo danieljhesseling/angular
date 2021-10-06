@@ -20,3 +20,82 @@ C:\Users\dani_\Desktop\Angular\curso\04-pipesAngularApp>npm install primeng prim
 
 - Lo pegamos en angular.json: style: []
 
+- Para incluir un elemento, se debe de importar en aquel modulo al que se le quiera incluir:
+	import { ElementModule } from 'module'; 
+
+- En styles.css se deben de aplicar los colores del tema: 
+	(Para comprobar los códigos --surface-b...) --> node_modules -> primeng -> resources -> themes -> bootstrap4-dark-purple -> theme.css
+
+CREAR MENU SUPERIOR
+
+- En menu.component.ts -> this.items = [ { 
+	label: 'texto',
+	icon: 'icono',
+	items: [ 
+		{
+		label: 'texto',
+		icon: 'icono',
+		routerLink: 'nombreRuta'
+		}	
+	 ]
+ } ]
+
+PRIMER FLEX
+
+- npm install primeflex --save
+
+- Pasar en angular.json el nuevo style
+
+- Recordar que se debe de importar en el module el primengmodule en caso de que se vaya a usar y en App.module importar el modulo que se vaya a usar
+
+- Flex se comporta muy similar a los de bootstrap
+
+FECHAS
+
+- Para incluir fechas en forma de pipes se debe de crear una variable Date: date: Date = new Date();
+
+CAMBIAR LOCALE DE LA APP
+
+- en app.module -> import localeEs from '@angular/common/locales/es';
+		   import { registerLocaleData } from '@angular/common';
+		
+- Se añade: 
+	registerLocaleData ( localeEs );
+
+- En la parte de providers: [
+		{
+		 provide: LOCALE_ID, use_value: 'es'
+		}]
+
+- En este caso se ha añadido el locale: ESpaña
+
+AÑADIR EFECTOS:
+
+- En app.component: 
+	constructor (private primengConfig: PrimeNGConfig) {} 
+
+	ngOnInit() {
+		this.primengCofing.ripple = true; 
+	}
+
+CREAR PIPES DE MANERA MANUAL 
+
+- Crear un archivo dentro de pipes -> nombre.pipe.ts 
+
+- Se debe de poner un decorador en el archivo: 
+	@Pipe({
+		name:'nombre del pipe' })
+
+	export class NombrePipe implements PipeTransform {
+		transform(value: string) {
+        		return "Hello";
+    		}
+
+	}
+
+- Se debe de declarar en el modulo donde se vaya a usar (sales.module.ts) 
+
+CREAR PIPES DE MANERA AUTOMÁTICA
+
+- ng g pipe sales/pipes/organize --skip-tests 
+

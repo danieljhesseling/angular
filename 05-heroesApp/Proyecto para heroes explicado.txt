@@ -1,0 +1,500 @@
+angular material: https://material.angular.io/
+angular flex: https://github.com/angular/flex-layout
+quicktype: https://app.quicktype.io/
+
+
+CREAR ESQUELETO DEL PROYECTO
+- Crear proyecto
+	ng new heroesApp
+
+- Para instalar ng material: 
+	ng add @angular/material
+
+- Para instalar ng flex-layout:
+	npm i -s @angular/flex-layout @angular/cdk
+
+- Creamos módulo auth, heroes y material: 
+	ng g m auth
+	ng g m heroes
+	ng g m material
+
+- Creamos componentes login y register:
+	ng g c auth/pages/login --skip-tests -is
+	ng g c auth/pages/register --skip-tests -is
+
+- Creamos componentes add, search, heroe, home y list:
+	ng g c heroes/pages/add --skip-tests -is
+	ng g c heroes/pages/search --skip-tests -is
+	ng g c heroes/pages/heroe --skip-tests -is
+	ng g c heroes/pages/home --skip-tests -is
+	ng g c heroes/pages/list --skip-tests -is
+
+- Creamos página para errores:
+	ng g c shared/errorPage --skip-tests -is
+
+
+CREAR RUTAS PRINCIPALES 
+- En app-routing.module.ts
+	const routes: Routes = [{
+	ruta
+	}]
+
+- Allá dónde se quieran mostrar las rutas:
+	<router-outlet> </router-outlet>
+
+RUTAS HIJAS Y LAZYLOAD
+- Para crear una ruta hija se debe de instalar en la misma carpeta del modulo hijo: 
+	ng g m auth/authRouting --flat
+
+- En este modulo se debe de crear la misma estructura del app-routing
+
+- La principal diferencia es que dentro de las rutas se encuentra el children: [{ paths }] y en imports: [ RouterModule.forChild( route ) ]
+
+- Se debe de importar en el modulo principal del hijo: 
+	auth.module.ts 
+
+- Dentro del app-routing principal se debe de hacer el LazyLoad de una ruta hija con una promesa:
+
+	{
+		path: 'auth',
+		loadChildren: () => import('./auth/auth.module').then( m => m.AuthModule )
+	}
+
+
+- Para expresar un componente padre, como es el caso de home dentro de heroes:
+	heroes-routing.module.ts
+		const route: Routes = [
+    					{
+      						path: '',
+      						component: HomeComponent,
+      						children: [....
+
+NG-FLEX
+- Allá donde se use ng-flex:
+	import { FlexLayoutModule } from '@angular/flex-layout';
+
+	@NgModule({
+    		...
+    		imports: [ FlexLayoutModule ],
+    		...
+		});
+
+NG-MATERIAL
+-Todo lo que va con material irá en material.module.ts 
+
+- import {MatAutocompleteModule} from '@angular/material/autocomplete';
+  import {MatButtonModule} from '@angular/material/button'; 
+  import {MatCardModule} from '@angular/material/card';
+  import {MatFormFieldModule} from '@angular/material/form-field';
+  import {MatGridListModule} from '@angular/material/grid-list';
+  import {MatIconModule} from '@angular/material/icon'; 
+  import {MatInputModule} from '@angular/material/input'
+  import {MatListModule} from '@angular/material/list'; 
+  import {MatSelectModule} from '@angular/material/select';
+  import {MatSidenavModule} from '@angular/material/sidenav';
+  import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+  import {MatToolbarModule} from '@angular/material/toolbar'; 
+
+- (recordar importar el modulo de material siempre en aquel modulo que será usado)
+
+- Estructura del sidenav en home.component.html
+
+- .spacer -> clase de CSS para empujar todo a los bordes: { flex: 1 1 auto; } 
+
+INSTALAR JSON-SERVE PARA BACKEND
+
+- Se instala json-server npm install -g json-server
+
+- Creamos una carpeta paralela: 05-heroesApp-server
+
+- Para levantarlo: json-server --watch nombreDelJson.json
+
+- En postman, para comprobar que funciona, copiamos el link: http://localhost:3000/heroes
+
+- En la carpeta assets deben estar las imágenes que irán ligadas a la base de datos.
+
+- Crear carpeta dentro de heores -> services 
+	ng g s heroes/services/heroes
+
+- Instalar el httpClientModule en app.module
+
+- En heroes.service
+	contructor ( pirvate http: HttpClient ) {} 
+
+- Se inyecta allá donde se vaya a usar:
+	En list.component -> contructor ( private heroesService: HeoresService ) {}
+
+-    this.heroesService.getHeroes()
+      .subscribe( heroe => this.heroes = heroe );
+
+- Creamos la interface en heroes y pegamos el resultado de quicktype
+
+- Dentro de la interface, se cambia el nombre del export a Heroe, id pasa a ser opcional con un ? y se añade un alt_img?: string; 
+
+- Se realiza un ligero cambio en el heroes.service:
+	getHeroes(): Observable<Heroe[]> {
+		return this.http.get<Heroe[]>('http://localhost:3000/heroes')
+		}
+
+CARTAS PARA MOSTRAR LOS HEROES
+- Creamos una carpeta components en heroes y su componente:
+	ng g c heroes/components/HeroeCard --skip-tests -is
+
+- En heroe-card.component.ts:
+	@Input() heroe!: Heroe; 
+
+	constructor() {} 
+
+- En list-component.html
+	 <app-heroe-card [heroe] = heroe> </app-heroe-card>
+
+PIPE PARA MOSTRAR IMAGENES + ALTER EGO
+- Crear un pipe que recibirá el objeto heroe y retornará un path: 'assets/heroes/{{ heroe.id }}.jpg' 
+	ng g pipe heroes/pipes/image --skip-tests
+
+- En el pipe:
+	transform(heroe: Heroe): string {
+   		return `assets/heroes/${heroe.id}.jpg`;
+  	}
+
+- En heroeCard.html:
+	<img mat-card-image [src] = "heroe | image"> 
+
+
+PRIMEROS PASOS PARA MOSTRAR AL HEROE QUE SE SELECCIONA
+- Nuevamente en heoreCard.html -> en <mat-card-actions> añadir en ambos botones [routerLink] => path 
+
+- Se debe de recoger la info del link para mostarla en pantalla, para ello en heroe.component.ts, el primer paso:
+	constructor( private activatedRoute: ActivatedRoute, private heroesService: HeroesService ) { }
+
+	ngOnInit(): void {
+    		this.activatedRoute.params
+      			.subscribe( heroe => {
+        			console.log(heroe.id);
+      			})
+  		}
+
+- En heroe.component.ts creamos una variable heroe con el simbolo de exclamación para obligar a typescript a confiar en nosotros -> 
+	heroe!: Heroe;
+
+- En heroesService
+	getHeroeById( id: string ): Observable <Heroe> {
+
+	}
+
+ENVIROMENTS
+- Los enviroments son usados para la producción y posterior lanzamiento, en paginaweb sería la página web final. 
+
+- En Enviroments -> enviroment.ts:
+	export const enviroment = {
+		production: false,
+		apiUrl: 'http://localhost:3000/'
+		}
+
+- Y en enviroment.prod.ts ->
+	export const environment = {
+  		production: true,
+  		apiUrl: 'http://paginaweb/'
+	};
+
+- En service: 
+	private apiUrl: string = enviroment.apiUrl;
+
+	getHeroes(): Observable<Heroe[]> {
+    		return this.http.get<Heroe[]>(`{ this.apiUrl }/heroes/`);
+  	}
+
+AUTOCOMPLITE
+- En Heroes.module -> Importar FormsModule para el ngModel
+
+- En search.html se realiza la UI
+
+- Y en search.ts:
+	value: string = '';
+  	heroes: Heroe[] = [];
+  	selectedHeroe: Heroe | undefined;
+
+  	constructor( private heroesService: HeroesService) { }
+
+- En service:
+	 getHeroesBySuggestion( search: string): Observable<Heroe[]> {
+    		return this.http.get<Heroe[]>(`${ this.apiUrl }/heroes?q=${ search }&_limit=5`)
+  		}
+
+- En search.ts:
+	searching() {
+    		this.heroesService.getHeroesBySuggestion( this.value.trim() )
+      			.subscribe( heroes => this.heroes = heroes );
+	  	}
+
+	//Una vez Comprobado el event que se dispara al seleccionar, podemos tomar el tipo de evento
+	selected( event: MatAutocompleteSelectedEvent ) {
+    		console.log(event);
+  	}
+ 
+- Una vez comprobado el event:
+	selected( event: MatAutocompleteSelectedEvent ) {
+		
+		if(!event.option.value) {
+			this.selectedHeroe = undefined;
+			return;
+		}
+ 
+    		const heroe: Heroe = event.option.value;
+    		this.value = heroe.superhero;
+
+		this.heroesService.getHeroesById( heroe.id! )
+      			.subscribe( heroe => this.selectedHeroe = heroe);
+	}
+	
+AGREGAR HEROE Y MODIFICAR:
+- En add.component.ts creamos una variable para poder seleccionar el publicador en el html (mat-select) 
+
+- Creamos un heroe vacío: Heroe = { superhero: '', alter_ego: ''... }
+
+- Una función save() con una excepción en caso de que this.heroe.superhero.trim().length sea igual a 0, por lo que devuelve nada.
+
+- Buscamos la manera de introducir un dato en la base de datos en postman: http://localhost:3000/heroes/
+	Cambiamos GET por POST // Params por Body // x-www-form-urlencoded
+	Introducimos los keys: superhero ... Y pulsamos send, debería crearse un heroe.
+
+- En service:
+	addHeroe(heroe: Heroe ): Observable<Hero>{
+		return this.http.post<Heroe>(`${ this.apiUrl }/heroes`, heroe);
+	}
+
+- En add.ts se agrega un private heroesService: HeroesService y un activatedRoute para poder editar y tomar los datos de la URL activa, y por último un router para navegar
+
+- Para tomar el ID de aquel heroe que está siendo modificado:
+	En ngOnInit(): void {
+		this.activatedRoute.params
+			.pipe( 
+				switchMap(({id}) => this.heroesService.getHeroeById(id))
+					).subscribe( heroe => this.heroe = heroe );
+	}
+
+- Creamos una función para almacenar los datos:
+	save(){
+      		if (this.heroe.superhero.trim().length === 0){
+        		return;
+      		}
+
+      		if (this.heroe.id) {
+        		//update in case there was an existing id
+			this.heroesService.updateHeroe( this.heroe )
+				.subscribe ( heroe => console.log (heroe));
+      		} else {
+        		//create a new hero and navigate to the ui to edit
+			this.heroesService.addHeroe( this.heroe )
+          			.subscribe(heroe => {
+            				this.router.navigate(['/heroes/change', heroe.id]);
+          		});
+      		}
+	}
+
+- En service añadimos una función para actualizar el heroe:
+	updateHeroe (heroe: Heroe): Observable<Heroe>{
+		return this.http.put<Heroe>(`${ this.apiUrl }/heroes/${heroe.id}`, heroe);
+	}
+
+ARREGLAR EXCEPCIONES EN LOS PIPES DE IMÁGENES
+- En el pipe de imagenes, en caso de que no exista un id, su avatar será:
+	if( !heroe.id && !heroe.alt_img ) {
+		return 'assets/no-image.png';
+	}
+
+- Se puede observar en el json cuáles son las variables en las que se almacena el url de la imagen, y por ende poder controlarlo:
+	else if (heroe.alt_img) {
+		return heroe.alt_img;
+	} else {
+		return `assets/heroes/${ heroe.id }.jpg`;
+	}
+	
+ELIMINAR HEROES
+- En service creamos una función que toma un id, y devuelve un <any>
+	deleteHeroe ( id: string ): Observable<any>{
+    		return this.http.delete<any>(`${ this.apiUrl }/heroes/${id}`);
+ 	}
+
+- En add.ts creamos la función delete:
+	delete() {
+    		this.heroesService.deleteHeroe( this.heroe.id! )
+      			.subscribe( resp => {
+        			this.router.navigate(['/heroes']);
+      			})
+  	}
+
+MENSAJE PARA ELIMINAR HEROE:
+- Crear component para la ventana
+
+- ng g c heroes/components/confirm --skip-tests -is
+
+- En el propio add.ts en el constructor añadimos: public dialog: MatDialog y en importaciones importamos MatDialog
+
+- En delete(): 
+	const dialog = this.dialog.open( ConfirmComponent , {
+      		width: '10rem'});
+
+- Se crea la parte gráfica del dialog en el componente
+
+- En confrim.ts añadimos las dos funciones y en el constructor( private dialogRef: MatDialogRef<ConfirmComponent> ) { }
+
+CREAR EL LOGIN
+- En el modulo de auth importamos materialModule para toda la parte gráfica
+
+- Desde el login se quiere viajar a la zona de heroes, por lo que en el constructor del login -> private router: Router 
+
+- Creamos una función para el login () {
+				this.router.navigate(['./heroes/']);
+				} 
+
+- De igual manera en home para realizar el logout, se añade el constructor, y la función logout
+
+CREAR USUARIOS
+- Para crear usuarios se debe de crear un service auth:
+	ng g s auth/services/auth 
+
+- En authService
+	private apiUrl: string = eviroment.apiUrl; 
+
+	constructor(private http: HttpClient) {} 
+
+	login() {
+		return this.http.get(`${ this.apiUrl }/users/1`);
+	}
+
+- Para comprobar la funcionalidad, en login.ts, comentamos el this.router.navigate (pues será mediante una condición) y se muestra por consola:
+	login() {
+		this.authService.login()
+			.subscribe( resp => {
+				console.log(resp);
+			}
+	}
+- Para tener acceso a authService, se debe escribir en el constructor de login (private authService: AuthService)
+
+- Creamos la interface para auth:
+	auth/interfaces/auth.interface.ts:
+		export interface Auth {
+    			id:     string;
+    			email:  string;
+    			user:   string;
+		}
+
+- En auth.Service -> el login() ahora retorna un <Auth> (return this.http.get<Auth>(...))
+
+- Por lo que ahora, en el login, si resp.id existe ->  this.router.navigate(['./heroes/']);
+
+- Variable para almacenar el login en el AuthService:
+	private _auth: Auth | undefined;
+
+- El login lo complimentamos para almacenar el user:
+	.pipe(
+		tap( auth => this._auth = auth)
+	)
+
+- Recibimos la información para luego mostrarla en el exterior, realizando un getter:
+	getAuth(): Auth {
+    		return { ...this._auth!	 }
+  	}
+	
+MOSTRAR INFORMACIÓN EN EL EXTERIOR
+- En home inyectamos el authService: 
+	constructor(... ... private authService: AuthService )
+
+- Creamos el getter en home.ts:
+	get auth() {
+		return this.authService.auth;
+	}
+ 
+CREAR PROTECTORES DE RUTAS
+- ng g guard auth/guards/auth --skip-tests
+	can Activate y can Load
+
+- Creamos un constructro en el guard:
+	constructor ( private authService: AuthService ) {} 
+
+	canLoad(
+    		route: Route,
+    		segments: UrlSegment[]): Observable<boolean> | Promise<boolean> | boolean {
+
+      			if (this.authService.auth.id) {
+        			return true
+      			}
+
+    			return false;
+  		}
+	}
+
+	canActivate(
+    		route: Route,
+    		segments: UrlSegment[]): Observable<boolean> | Promise<boolean> | boolean {
+
+      			if (this.authService.auth.id) {
+        			return true
+      			}
+
+    			return false;
+  		}
+	}
+
+- Para aplicar esta protección, en app.routing
+	path: 'heroes',
+    	loadChildren: () => import('./heroes/heroes.module').then ( m => m.HeroesModule),
+    	canLoad: [ AuthGuard ],
+	canActivate: [ AuthGuard ]
+
+ALMACENAR EL USUARIO EN EL LOCAL STORAGE
+- En auth.service
+	login() {....
+					...tap(...)
+					   tap( auth => localStorage.setItem('id', auth.id) )
+
+MANTENER EL USUARIO ACTIVADO
+- Creamos una función en auth.service
+	verificateAuth(): Observable<boolean> {
+		
+		if ( !localStorage.getItem('id') ) {
+			return of(false);
+		}
+		
+		return this.http.get<Auth>(`${ this.apiUrl }/users/1`)
+			.pipe(
+				map( auth => {
+					this._auth = auth;
+					return true;
+				})
+			);
+		
+		}
+
+ENVIAR AL LOGIN EN CASO DE NO TENER USUARIO
+- constructor ( private router: Router )
+
+- CanActivate y canLoad lo cambiamos por:
+
+	canActivate(...) {
+	
+		return this.authService.verificateAuth()
+			.pipe(
+				tap( isAuth => {
+					if ( !isAuth ) {
+						this.router.navigate(['./auth/login']);
+					}
+				})
+			)
+		
+	}
+
+	canLoad(...) {
+	
+		return this.authService.verificateAuth()
+			.pipe(
+				tap( isAuth => {
+					if ( !isAuth ) {
+						this.router.navigate(['./auth/login']);
+					}
+				})
+			)
+		
+	}
+

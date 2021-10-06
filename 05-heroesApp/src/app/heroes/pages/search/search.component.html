@@ -1,0 +1,73 @@
+<div fxLayout="column">
+    <div>
+        <h1>Heroes Search</h1>
+    </div>
+
+    <mat-divider></mat-divider>
+    <div >
+            <mat-form-field class="example-full-width" appearance="outline" fxFlex="80" style="margin-top: 1.5rem;">
+                <input type="text"
+                placeholder="Search Heroe..."
+                aria-label="Number"
+                matInput
+                [(ngModel)]="value"
+                [matAutocomplete]="auto"
+                (input) = "searching()">
+
+                <mat-autocomplete 
+                    autoActiveFirstOption 
+                    (optionSelected) = " selected( $event )"
+                    #auto="matAutocomplete">
+
+                <mat-option *ngFor="let heroe of heroes"  [value]="heroe">
+                    {{heroe.superhero}}
+                </mat-option> 
+                <mat-option value="" *ngIf="heroes.length === 0">
+                    No Superhero finded
+                </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+
+            <!-- Buttons as filter
+            <div fxLayout= "row">
+
+                <span class="spacer"></span>
+
+                <button 
+                    class="btn-filter"
+                    mat-button 
+                    color="primary"
+                    (click)="activatedPublisher('DC')">
+                    DC
+                </button>
+
+                <button 
+                    class="btn-filter"
+                    mat-button 
+                    color="warn"
+                    (click)="activatedPublisher('Marvel')">
+                    Marvel
+                </button>
+            </div>-->
+    </div>
+
+    <div *ngIf="selectedHeroe">
+        <div fxLayout="row wrap">
+            <app-heroe-card 
+                [heroe]="selectedHeroe"
+                fxFlex="20"></app-heroe-card>
+        </div>
+    </div>
+
+    <!-- In a future for the buttons 
+    <div *ngIf="selectedHeroes">
+        <div fxLayout="row wrap"
+            *ngFor="let heroe of heroes">
+            <app-heroe-card 
+                [heroes]="selectedHeroes"
+                fxFlex="20"></app-heroe-card>
+        </div>
+    </div>
+    -->
+
+</div>

@@ -1,0 +1,32 @@
+TEMPLATE Y LAZYLOAD
+- ng new formsApp 
+
+- Instalar boostrap
+
+- Craemos los módulos necesarios:
+	ng g m shared
+	ng g c shared/sidenav --skip-tests -is (importar y exportar sharedModule)
+	
+- Creamos los modulos con -routing (para crear las rutas)
+	ng g m template --routing
+	ng g m reactive --routing
+	
+- Creamos los componentes 
+	ng g c reactive/basics --skip-tests -is
+	ng g c reactive/dinamics --skip-tests -is
+	ng g c reactive/switches --skip-tests -is
+
+- Se configuran las rutas de reactive:
+	path:'',	
+	children: [...]
+
+- Componentes de template:
+	ng g c template/basics --skip-tests -is
+	ng g c template/dinamics --skip-tests -is
+	ng g c template/switches --skip-tests -is
+
+
+- Se configuran las rutas de template:
+	path:'',	
+	children: [...]
+

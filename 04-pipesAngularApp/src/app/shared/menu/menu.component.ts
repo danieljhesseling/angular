@@ -52,9 +52,9 @@ export class MenuComponent implements OnInit {
             url: 'https://wonderful-goodall-388efa.netlify.app'
           },
           {
-            label: 'HeroesApp',
+            label: 'HeroesApp - Only GitHub',
             icon: 'pi pi-play',
-            url: 'https://loving-archimedes-9b0020.netlify.app'
+            url: 'https://github.com/danieljhesseling/angular/tree/master/05-heroesApp'
           }
         ]
       },

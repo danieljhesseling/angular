@@ -28,27 +28,6 @@
                 </mat-autocomplete>
             </mat-form-field>
 
-            <!-- Buttons as filter
-            <div fxLayout= "row">
-
-                <span class="spacer"></span>
-
-                <button 
-                    class="btn-filter"
-                    mat-button 
-                    color="primary"
-                    (click)="activatedPublisher('DC')">
-                    DC
-                </button>
-
-                <button 
-                    class="btn-filter"
-                    mat-button 
-                    color="warn"
-                    (click)="activatedPublisher('Marvel')">
-                    Marvel
-                </button>
-            </div>-->
     </div>
 
     <div *ngIf="selectedHeroe">
@@ -58,16 +37,5 @@
                 fxFlex="20"></app-heroe-card>
         </div>
     </div>
-
-    <!-- In a future for the buttons 
-    <div *ngIf="selectedHeroes">
-        <div fxLayout="row wrap"
-            *ngFor="let heroe of heroes">
-            <app-heroe-card 
-                [heroes]="selectedHeroes"
-                fxFlex="20"></app-heroe-card>
-        </div>
-    </div>
-    -->
 
 </div>

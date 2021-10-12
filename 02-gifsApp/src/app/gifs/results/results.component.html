@@ -4,9 +4,18 @@
     </li>
 </ul> -->
 
-<div class="row">
-    <div *ngFor="let gif of results" 
-        class="col-md-4 col-sm-6 animate__animated animate__pulse">
+<div    
+        fxLayout="row wrap"
+        fxLayoutAlign="center"
+        fxLayoutGap="1em">
+
+    <div
+        fxFlex="30"
+        fxFlex.lg="30"
+        fxFlex.sm="40"
+        fxFlex.xs="80" 
+        *ngFor="let gif of results" 
+        class="animate__animated animate__pulse">
 
         <div class="card">
             <img [src] = "gif.images.downsized_medium.url"

@@ -468,7 +468,7 @@ MANTENER EL USUARIO ACTIVADO
 		}
 
 ENVIAR AL LOGIN EN CASO DE NO TENER USUARIO
-- constructor ( private router: Router )
+- En guard auth -> constructor ( private router: Router )
 
 - CanActivate y canLoad lo cambiamos por:
 
@@ -498,3 +498,5 @@ ENVIAR AL LOGIN EN CASO DE NO TENER USUARIO
 		
 	}
 
+CAMbIOS PARA QUE FUNCIONE EN EL MOVIL
+- COMENTAR LOS CANLOAD Y CANACTIVATE del app-routing

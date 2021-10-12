@@ -69,7 +69,7 @@ export class GifsService {
     //To clean the params that goes after the mainRoot:
     const params = new HttpParams()
       .set('api_key', this._apiKey)
-      .set('limit', 21)
+      .set('limit', 40)
       .set('q', query);
 
     //Request with http, <SearchGifsResponse> is to get the interface

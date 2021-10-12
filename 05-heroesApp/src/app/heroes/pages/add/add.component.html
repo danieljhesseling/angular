@@ -81,6 +81,7 @@
                 mat-raised-button 
                 color="primary"
                 (click) = "save()"
+                (tap) = "save()"
                 fxFlex="40">
                     <mat-icon>edit</mat-icon>
                     Save Superhero
@@ -92,6 +93,7 @@
                 mat-raised-button 
                 color="warn"
                 (click) = "delete()"
+                (tap) = "delete()"
                 *ngIf="heroe.id"
                 fxFlex="40">
                     <mat-icon>remove</mat-icon>
